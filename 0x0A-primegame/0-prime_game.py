@@ -2,6 +2,7 @@
 
 """ Prime Game """
 
+
 def isWinner(x, nums):
     """ Winner of the prime game """
     def is_prime(n):
