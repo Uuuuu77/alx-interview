@@ -2,43 +2,32 @@
 
 """ Prime Game """
 
-
-def is_prime(n):
-    """ Checking if it's a prime number """
-
-    if n <= 1:
-        return False
-    for x in range(2, int(n**0.5) + 1):
-        if n % x == 0:
-            return False
-
-    return True
-
-
-def calculate_primes_up_to(n):
-    """ Calculates the prime numbers upto n """
-
-    primes = []
-    for x in range(2, n + 1):
-        if is_prime(x):
-            primes.append(x)
-
-    return primes
-
-
 def isWinner(x, nums):
-    """ Determines who's the winner of each game """
+    """ Winner of the prime game """
+    def is_prime(n):
+        if n < 2:
+            return False
+        for x in range(2, int(n**0.5) + 1):
+            if n % x == 0:
+                return False
+        return True
 
-    wins = {"Maria": 0, "Ben": 0}
+    def count_primes(n):
+        return sum(is_prime(x) for x in range(2, n+1))
 
-    for y in nums:
-        primes = calculate_primes_up_to(y)
-        if len(primes) % 2 == 0:
-            wins["Ben"] += 1
+    maria_wins = 0
+    ben_wins = 0
+
+    for n in nums:
+        primes = count_primes(n)
+        if primes % 2 == 0:
+            ben_wins += 1
         else:
-            wins["Maria"] += 1
+            maria_wins += 1
 
-    if wins["Maria"] == wins["Ben"]:
+    if maria_wins > ben_wins:
+        return "Maria"
+    elif ben_wins > maria_wins:
+        return "Ben"
+    else:
         return None
-
-    return max(wins, key=wins.get)
